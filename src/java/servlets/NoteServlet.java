@@ -19,7 +19,6 @@ public class NoteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String line;
         String fileTitle;
         String fileBody;
@@ -47,18 +46,21 @@ public class NoteServlet extends HttpServlet {
  
         String newTitle = "";
         String newContent = "";
+        Note updateNote = new Note();
         
         String path = getServletContext().getRealPath("/WEB-INF/note.txt");
         try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(path, false)))) {
-            Note updateNote = new Note(request.getParameter("newTitle"), request.getParameter("newContent"));
+            updateNote.setTitle(request.getParameter("newTitle"));
+            updateNote.setContents(request.getParameter("newContent"));
             
             pw.println(updateNote.getTitle());
             pw.println(updateNote.getContents());
+            pw.close();
         }catch(IOException e){
             
         }
-        
-        getServletContext().getRequestDispatcher("/WEB-INF/EditNote.jsp")
+        request.setAttribute("note", updateNote);
+        getServletContext().getRequestDispatcher("/WEB-INF/ViewNote.jsp")
                 .forward(request, response);
         
         

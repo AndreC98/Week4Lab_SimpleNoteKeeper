@@ -14,7 +14,7 @@
     <body>
         <h1>Simple Note Keeper</h1>
         <h2>Edit Note</h2>
-        <form action="edit" method="post">
+        <form action="note" method="post">
             Title:<input type="text" name="newTitle" value="${note.title}"><br>
             Contents:<textarea name="newContent" rows="8" cols="35">${note.contents}</textarea><br>
             <input type="submit" value="save" name="Save">
