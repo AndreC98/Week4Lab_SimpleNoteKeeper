@@ -9,9 +9,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Edit Note</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Simple Note Keeper</h1>
+        <h2>Edit Note</h2>
+        <form action="edit" method="post">
+            Title:<input type="text" name="newTitle" value="${note.title}"><br>
+            Contents:<textarea name="newContent" rows="8" cols="35">${note.contents}</textarea><br>
+            <input type="submit" value="save" name="Save">
+        </form>
+            
     </body>
 </html>
