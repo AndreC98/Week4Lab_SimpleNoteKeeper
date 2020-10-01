@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Andre
  */
+
 public class NoteServlet extends HttpServlet {
 
     @Override
@@ -34,13 +35,34 @@ public class NoteServlet extends HttpServlet {
         Note newNote = new Note(fileTitle, fileBody);
         request.setAttribute("note", newNote);
         
-        getServletContext().getRequestDispatcher("/WEB-INF/ViewNote.jsp")
+//        getServletContext().getRequestDispatcher("/WEB-INF/ViewNote.jsp")
+//                .forward(request, response);
+        getServletContext().getRequestDispatcher("/WEB-INF/EditNote.jsp")
                 .forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+ 
+        String newTitle = "";
+        String newContent = "";
+        
+        String path = getServletContext().getRealPath("/WEB-INF/note.txt");
+        try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(path, false)))) {
+            Note updateNote = new Note(request.getParameter("newTitle"), request.getParameter("newContent"));
+            
+            pw.println(updateNote.getTitle());
+            pw.println(updateNote.getContents());
+        }catch(IOException e){
+            
+        }
+        
+        getServletContext().getRequestDispatcher("/WEB-INF/EditNote.jsp")
+                .forward(request, response);
+        
+        
+        
     }
 
 }
